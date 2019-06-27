@@ -41,6 +41,7 @@ public class ListViewModel extends ViewModel {
             currentTitle = title;
             liveData.setValue(SearchResult.inProgress());
         }
+
         searchService.search(title, page).enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<SearchResponse> call, @NonNull Response<SearchResponse> response) {
@@ -50,6 +51,9 @@ public class ListViewModel extends ViewModel {
                 if (result != null) {
                     aggregatedItems.addAll(result.getSearch());
                 }
+                //Set value to live data so that obeserver will oberver will catch the event.
+                 liveData.setValue(SearchResult.success(aggregatedItems,result.getTotalResults()));
+
             }
 
             @Override
