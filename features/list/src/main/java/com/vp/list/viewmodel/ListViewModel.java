@@ -34,12 +34,12 @@ public class ListViewModel extends ViewModel {
         return liveData;
     }
 
-    public void searchMoviesByTitle(@NonNull String title, int page) {
+    public void searchMoviesByTitle(@NonNull String title, int page,SearchResult result) {
 
         if (page == 1 && !title.equals(currentTitle)) {
             aggregatedItems.clear();
             currentTitle = title;
-            liveData.setValue(SearchResult.inProgress());
+            liveData.setValue(result);
         }
 
         searchService.search(title, page).enqueue(new Callback<SearchResponse>() {
